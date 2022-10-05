@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MusicBee</title>
+        <link id="favicon" rel="icon" href="img/icons/light.png">
+
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A light, fast, and simple music player for your PC."/>
+        <meta name="keywords" content="musicbee, music, player, light, fast, simple, customizable, themes, pc"/>
+        <meta name="author" content="Federico Laria" />
+
+        <link rel="stylesheet" href="css/style.css">
+
+        <!-- Vue -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <!-- Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <div id="app" :style="appStyle">
+            <dynamic-nav
+                :left-list="navLeftList"
+                :right-list="navRightList"
+                :on-small-screen="onSmallScreen"
+                :nav-mobile-show="navMobileShow"
+                @change-theme="changeTheme"
+                @change-language="changeLanguage"
+                @change-nav="changeMobileNav"
+                ref="nav"
+            ></dynamic-nav>
+
+            <header id="home-header">
+                <h1 v-html="pTexts.header.title"></h1>
+
+                <p class="header-text" v-html="pTexts.header.body"></p>
+
+                <div id="header-buttons">
+                    <primary-button
+                        :tag="'a'"
+                        :text="pTexts.header.download"
+                        :size-class="'one-column'"
+                        :href="'download.html'"
+                    ></primary-button>
+
+                    <secondary-button
+                        :tag="'a'"
+                        :text="pTexts.header.features"
+                        :size-class="'one-column'"
+                        :href="'#themes-bars'"
+                    ></secondary-button>
+                </div>
+            </header>
+
+            <ul id="themes-bars">
+                <li
+                    v-for="(t, key) in themes"
+                    class="themes-bar"
+                    :class="{ 'themes-bar-selected': (key === currentTheme) }"
+                    :style="'background-color: ' + ((theme.darkTheme && t.altColors) ? t.colors.bg : t.colors.primary)
+                            + '; color: ' + ((theme.darkTheme && t.altColors) ? t.colors.primary : t.colors.bg)"
+                    @click="changeTheme(key)"
+                >
+                    <span class="themes-bar-name">{{lang.themes[key]}}</span>
+                </li>
+            </ul>
+
+            <section id="customization-section" class="section-alternate-bg">
+                <h2 v-html="pTexts.customization.title"></h2>
+
+                <div id="customization-ul-container">
+                    <ul id="themes-buttons-container">
+                        <li
+                            v-for="(t, key) in themes"
+                        >
+                            <button
+                                v-if="(key != currentTheme)"
+                                class="themes-button"
+                                :style="'background-color: ' +
+                                        ((theme.darkTheme && t.altColors) ? t.colors.bg : t.colors.primary)"
+                                @click="changeTheme(key)"
+                            ></button>
+                            
+                            <div v-else class="themes-current-container">
+                                <img
+                                    class="themes-current-image"
+                                    :src="'img/skins/' + key + '.png'"
+                                    :alt="t.name + ' Theme'"
+                                >
+                            </div>
+                        </li>
+                    </ul>
+
+                    <button
+                        class="customization-mobile-button"
+                        @click="adjacentTheme(-1)"
+                    ></button>
+                    <button
+                        id="customization-mobile-right-button"
+                        class="customization-mobile-button"
+                        @click="adjacentTheme(1)"
+                    ></button>
+                </div>
+
+                <div id="themes-dots-container" class="three-columns">
+                    <div style="width:100px;"></div>
+
+                    <ul id="themes-dots">
+                        <li
+                            v-for="(t, key) in themes"
+                            :key="'theme-dot' + key"
+                            class="themes-dot"
+                            :class="{ 'themes-dot-selected': (key === currentTheme) }"
+                            @click="changeTheme(key)"
+                        ></li>
+                    </ul>
+
+                    <secondary-button
+                        :tag="'button'"
+                        :text="pTexts.customization.random"
+                        :size-class="''"
+                        @click-event="setRandomTheme"
+                    ></secondary-button>
+                </div>
+
+                <p v-html="pTexts.customization.body"></p>
+            </section>
+
+            <section class="section-alternate-bg">
+                <h2 v-html="pTexts.sync.title"></h2>
+
+                <div id="sync-svg-container" class="three-columns">
+                    <dynamic-svg
+                        :file="'sync'"
+                        :alt="'Sync MusicBee to your devices.'"
+                        :hover-effect="true"
+                    ></dynamic-svg>
+                </div>
+
+                <p v-html="pTexts.sync.body"></p>
+            </section>
+
+            <section class="section-alternate-bg">
+                <h2>{{pTexts.features.title}}</h2>
+
+                <ul id="quality-list" class="three-columns">
+                    <li
+                        v-for="(f, index) in features"
+                        :key="'feature' + index"
+                        class="quality-item svg-hover-container svg-hover-parent"
+                        :class="{ 'quality-item-odd': (index % 2) }"
+                    >
+                        <div class="feature-svg-container">
+                            <dynamic-svg
+                                :file="'features/' + f.file"
+                                :alt="f.title"
+                                :hover-effect="true"
+                            ></dynamic-svg>
+                        </div>
+
+                        <div class="quality-item-info">
+                            <h3>{{f.title}}</h3>
+                            <p v-html="f.body"></p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="section-alternate-bg">
+                <div class="bee-bg"></div>
+
+                <h2 v-html="pTexts.more.title" class="z-five"></h2>
+
+                <p v-html="pTexts.more.body" class="z-five"></p>
+
+                <div class="z-five">
+                    <primary-button
+                        :tag="'a'"
+                        :text="pTexts.more.download"
+                        :size-class="''"
+                        :href="'download.html'"
+                    ></primary-button>
+                </div>
+            </section>
+
+            <dynamic-footer
+                :texts="lang.footer"
+                :alt-colors="theme.altColors"
+            ></dynamic-footer>
+        </div> <!-- #app -->
+        
+        <!-- Javascript -->
+        <script src="js/variables.js"></script>
+        <!-- Vue App -->
+        <script src="js/app.js"></script>
+    </body>
+</html>

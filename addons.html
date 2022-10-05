@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MusicBee - Add-ons</title>
+        <link id="favicon" rel="icon" href="img/icons/light.png">
+
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A light, fast, and simple music player for your PC."/>
+        <meta name="keywords" content="musicbee, music, player, light, fast, simple, customizable, themes, pc"/>
+        <meta name="author" content="Federico Laria" />
+
+        <link rel="stylesheet" href="css/style.css">
+
+        <!-- Vue -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <!-- Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <div id="app" :style="appStyle">
+            <dynamic-nav
+                :left-list="navLeftList"
+                :right-list="navRightList"
+                :on-small-screen="onSmallScreen"
+                :nav-mobile-show="navMobileShow"
+                @change-theme="changeTheme"
+                @change-language="changeLanguage"
+                @change-nav="changeMobileNav"
+                ref="nav"
+            ></dynamic-nav>
+
+            <section id="addons-section">
+                <h1 class="z-five">{{pTexts.title}}</h1>
+
+                <div id="addons-menu-container">
+                    <div id="addons-filters-container">
+                        <ul id="addons-filters-list">
+                            <li
+                                v-for="(addon, key) in pTexts.filters"
+                                :key="'filter-' + key"
+                                class="addons-filter"
+                            >
+                                <secondary-button
+                                    :tag="'button'"
+                                    :text="addon.title"
+                                    :size-class="(addonSelected === key) ? 'addons-button-selected' : ''"
+                                    @click-event="changeAddonFilter(key)"
+                                ></secondary-button>
+                            </li>
+                        </ul>
+
+                        <p
+                            id="addons-filters-body"
+                            class="small-text"
+                            v-html="pTexts.filters[addonSelected].body"
+                        ></p>
+                    </div>
+                   
+                    <input
+                        id="search-bar"
+                        type="text"
+                        :placeholder="pTexts.search"
+                    >
+                </div>
+
+                <div id="addons-categories-container" ref="addonsCategories">
+                    <section id="addons-popular-section" class="addons-subsection">
+                        <h2>{{pTexts.popular}}</h2>
+                        <ul id="addons-popular-list" class="addons-list">
+                            <addon-card
+                                v-for="(addon, index) in addons.popular"
+                                :key="'popular-addons-' + index"
+                                :addon="addon"
+                                :by="pTexts.by"
+                            ></addon-card>
+                        </ul>
+                    </section>
+
+                    <section id="addons-new-section" class="addons-subsection">
+                        <h2>{{pTexts.new}}</h2>
+                        <ul id="addons-popular-list"  class="addons-list">
+                            <addon-card
+                                v-for="(addon, index) in addons.new"
+                                :key="'popular-addons-' + index"
+                                :addon="addon"
+                                :by="pTexts.by"
+                            ></addon-card>
+                        </ul>
+                    </section>
+
+                    <section id="addons-members-section" class="addons-subsection">
+                        <h2>{{pTexts.topMembers}}</h2>
+
+                        <ul id="top-members-list">
+                            <li
+                                v-for="(member, index) in topMembers"
+                                :key="'top-member' + index"
+                                class="top-member"
+                            >
+                                <div class="top-member-image-container">
+                                    <img class="top-member-image" :src="'img/addons/topmembers/' + member.picture" :alt="member.name">
+                                </div>
+                                <a href="#">
+                                    <h4 class="top-member-name">{{member.name}}</h4>
+                                </a>
+                                <p
+                                    class="small-text top-member-level"
+                                    :class="{ 'member-admin': (member.level === 1) }"
+                                >{{(member.level === 0) ? pTexts.userLevel.elite : pTexts.userLevel.admin}}</p>
+                                <p
+                                    class="small-text bold-text top-member-addons"
+                                >{{member.addons}} Add-ons</p>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+
+                <div id="addon-submit">
+                    <secondary-button
+                        :tag="'button'"
+                        :text="pTexts.submit"
+                        :size-class="''"
+                    ></secondary-button>
+                </div>
+            </section>
+
+            <dynamic-footer
+                :texts="lang.footer"
+                :alt-colors="theme.altColors"
+            ></dynamic-footer>
+        </div> <!-- #app -->
+        
+        <!-- Javascript -->
+        <script src="js/variables.js"></script>
+        <!-- Vue App -->
+        <script src="js/app.js"></script>
+    </body>
+</html>

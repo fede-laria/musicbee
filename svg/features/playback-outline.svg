@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.1.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 258 258" style="enable-background:new 0 0 258 258;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#1A1A1A;}
+	.st1{fill:none;stroke:#1A1A1A;stroke-width:22;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g>
+	<path class="st0" d="M67,178.5c6.6,0,12,5.4,12,12c0,6.6-5.4,12-12,12s-12-5.4-12-12C55,183.9,60.4,178.5,67,178.5 M67,156.5
+		c-18.7,0-34,15.3-34,34c0,18.7,15.3,34,34,34s34-15.3,34-34C101,171.8,85.7,156.5,67,156.5L67,156.5z"/>
+</g>
+<g>
+	<path class="st0" d="M194,178.5c6.6,0,12,5.4,12,12c0,6.6-5.4,12-12,12s-12-5.4-12-12C182,183.9,187.4,178.5,194,178.5 M194,156.5
+		c-18.7,0-34,15.3-34,34c0,18.7,15.3,34,34,34s34-15.3,34-34C228,171.8,212.7,156.5,194,156.5L194,156.5z"/>
+</g>
+<polyline class="st1" points="90,190.5 90,83.5 217,63.5 217,188.5 "/>
+<polyline class="st1" points="90,150.5 90,43.5 217,23.5 217,148.5 "/>
+<circle class="st0" cx="192" cy="190.5" r="25"/>
+<circle class="st0" cx="70" cy="190.5" r="25"/>
+</svg>

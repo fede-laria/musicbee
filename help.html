@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MusicBee - FAQ & Help</title>
+        <link id="favicon" rel="icon" href="img/icons/light.png">
+
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A light, fast, and simple music player for your PC."/>
+        <meta name="keywords" content="musicbee, music, player, light, fast, simple, customizable, themes, pc"/>
+        <meta name="author" content="Federico Laria" />
+
+        <link rel="stylesheet" href="css/style.css">
+
+        <!-- Vue -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <!-- Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <div id="app" :style="appStyle">
+            <dynamic-nav
+                :left-list="navLeftList"
+                :right-list="navRightList"
+                :on-small-screen="onSmallScreen"
+                :nav-mobile-show="navMobileShow"
+                @change-theme="changeTheme"
+                @change-language="changeLanguage"
+                @change-nav="changeMobileNav"
+                ref="nav"
+            ></dynamic-nav>
+
+            <section class="section-alternate-bg">
+                <h1>{{pTexts.title}}</h1>
+
+                <ul id="main-links" class="three-columns">
+                    <li
+                        v-for="(helpLink, index) in helpMainLinks"
+                        :key="'help' + index" 
+                        class="main-link-li svg-hover-parent"
+                    >
+                        <a :href="helpLink.href" target="_blank">
+                            <dynamic-svg
+                                :file="'help/' + helpLink.svg"
+                                :alt="''"
+                                :hover-effect="true"
+                            ></dynamic-svg>
+                            <div class="main-link-text">
+                                <h3 class="main-link-title" v-html="helpLink.title"></h3>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="section-alternate-bg">
+                <h1>{{pTexts.faqTitle}}</h1>
+
+                <ul id="faq-list" class="three-columns">
+                    <li
+                        v-for="(f, index) in pTexts.faq"
+                        :key="'faq' + index"
+                        class="faq-li"
+                    >
+                        <h3 class="faq-title">{{f.question}}</h3>
+                        <p>{{f.answer}}</p>
+                    </li>
+                </ul>
+
+                <div id="faq-more">
+                    <secondary-button
+                        :tag="'a'"
+                        :text="pTexts.faqMore"
+                        :size-class="''"
+                        :href="'https://musicbee.fandom.com/wiki/FAQ'"
+                        :target-blank="true"
+                    ></secondary-button>
+                </div>
+            </section>
+
+            <dynamic-footer
+                :texts="lang.footer"
+                :alt-colors="theme.altColors"
+            ></dynamic-footer>
+        </div> <!-- #app -->
+        
+        <!-- Javascript -->
+        <script src="js/variables.js"></script>
+        <!-- Vue App -->
+        <script src="js/app.js"></script>
+    </body>
+</html>
