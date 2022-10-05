@@ -847,7 +847,8 @@ const vueApp = new Vue({
         }
         // Read parameters
         let params = new URLSearchParams(document.location.search);
-        if (this.currentPage === 'addons') {
+        if (this.currentPage === '') this.currentPage === 'index';
+        else if (this.currentPage === 'addons') {
             let filter = params.get('filter');
             if (filter) this.addonSelected = filter;
         }
