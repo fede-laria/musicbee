@@ -85,7 +85,7 @@
                                 @click="changeTheme(key)"
                             ></button>
                             
-                            <div v-else class="themes-current-container">
+                            <div v-show="(key === currentTheme)" class="themes-current-container">
                                 <img
                                     class="themes-current-image"
                                     :src="'img/skins/' + key + '.png'"
